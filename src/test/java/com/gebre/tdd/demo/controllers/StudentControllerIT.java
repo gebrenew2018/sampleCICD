@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -25,5 +26,19 @@ public class StudentControllerIT {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
+    }
+    @Test
+    public void addStudent() throws Exception{
+
+        String student= "{\n" +
+                "name: \"Gebre\",\n" +
+                "age:32,\n" +
+                "department:\"Computer Science\"\n" +
+                "}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/add")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(student)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().is(400)).andReturn();
     }
 }
